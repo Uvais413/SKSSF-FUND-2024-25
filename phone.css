@@ -1,0 +1,28 @@
+nav ul li {
+    margin: 10px 0;
+}
+
+/* Adjust hero section */
+.hero-content {
+    text-align: center;
+}
+
+.hero-image {
+    display: none; /* Hide large images on small screens */
+}
+
+/* Adjust contact form */
+.contact-form {
+    width: 100%;
+    padding: 10px;
+}
+
+/* Adjust footer layout */
+.footer-content {
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer-links, .footer-services, .footer-contact {
+    margin-bottom: 20px;
+}
