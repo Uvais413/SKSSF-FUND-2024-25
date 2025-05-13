@@ -963,3 +963,11 @@ footer::before {
     }
 }        
 
+.footer-contact a {
+    color: #ffffff; /* white color */
+    text-decoration: none; /* optional: removes underline */
+}
+
+.footer-contact a:hover {
+    color: #dddddd; /* optional: slightly different on hover */
+}
