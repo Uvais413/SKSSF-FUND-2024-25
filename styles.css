@@ -971,3 +971,7 @@ footer::before {
 .footer-contact a:hover {
     color: #dddddd; /* optional: slightly different on hover */
 }
+.logo {
+    height: 60px;
+    width: auto;
+}
