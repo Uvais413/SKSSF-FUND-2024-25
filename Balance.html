@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Banking Portal</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <style>
+        :where([class^="ri-"])::before { content: "\f3c2"; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8fafc;
+        }
+        .login-bg {
+            background-image: url('https://readdy.ai/api/search-image?query=abstract%2520banking%2520background%2520with%2520subtle%2520financial%2520patterns%252C%2520light%2520green%2520gradient%252C%2520professional%2520and%2520clean%2520design%252C%2520minimal%2520style%252C%2520soft%2520geometric%2520shapes%252C%2520banking%2520symbols%252C%2520high%2520quality%2520digital%2520art&width=375&height=762&seq=bg123&orientation=portrait');
+            background-size: cover;
+            background-position: center;
+        }
+        input:focus {
+            outline: none;
+        }
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    </style>
+    <script>tailwind.config={theme:{extend:{colors:{primary:'#228B22',secondary:'#50C878'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+</head>
+<body class="w-[375px] h-[762px] mx-auto relative bg-white">
+    <!-- Login Page -->
+    <div id="loginPage" class="w-full h-full login-bg flex flex-col">
+        <div class="h-16 flex items-center justify-center shadow-sm bg-white/80 backdrop-blur-sm fixed w-full top-0">
+            <h1 class="text-2xl font-['Pacifico'] text-primary">logo</h1>
+        </div>
+        
+        <div class="flex-1 flex flex-col justify-center items-center px-6 pt-16">
+            <div class="w-full max-w-md p-6 rounded-lg bg-white/90 backdrop-blur-md shadow-lg">
+                <h2 class="text-xl font-semibold text-center mb-6 text-gray-800">Student Login</h2>
+                
+                <form id="loginForm" class="space-y-4">
+                    <div class="space-y-2">
+                        <label for="userId" class="block text-sm font-medium text-gray-700">User ID</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 w-10 h-full flex items-center justify-center text-gray-500">
+                                <i class="ri-user-line ri-lg"></i>
+                            </div>
+                            <input type="text" id="userId" name="userId" class="w-full pl-10 pr-3 py-2 border border-gray-300 !rounded-button focus:ring-2 focus:ring-primary/30 focus:border-primary" placeholder="Enter your user ID" required>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <label for="passcode" class="block text-sm font-medium text-gray-700">Passcode</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 w-10 h-full flex items-center justify-center text-gray-500">
+                                <i class="ri-lock-line ri-lg"></i>
+                            </div>
+                            <input type="password" id="passcode" name="passcode" class="w-full pl-10 pr-3 py-2 border border-gray-300 !rounded-button focus:ring-2 focus:ring-primary/30 focus:border-primary" placeholder="Enter your passcode" required>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center">
+                        <input id="remember" name="remember" type="checkbox" class="h-4 w-4 text-primary focus:ring-primary border-gray-300 !rounded-button">
+                        <label for="remember" class="ml-2 block text-sm text-gray-700">Remember me</label>
+                    </div>
+                    
+                    <div>
+                        <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent !rounded-button shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary cursor-pointer">
+                            Login
+                        </button>
+                    </div>
+                </form>
+                
+                <div id="errorMessage" class="mt-4 text-sm text-red-600 hidden"></div>
+                
+                <div class="mt-6 text-center">
+                    <p class="text-xs text-gray-600">Forgot your login details? Please contact your administrator</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="p-4 text-center text-xs text-gray-600">
+            <p>© 2025 Student Banking Portal. All rights reserved.</p>
+        </div>
+    </div>
+    
+    <!-- Dashboard Page (Initially Hidden) -->
+    <div id="dashboardPage" class="w-full h-full flex flex-col hidden">
+        <!-- Header -->
+        <div class="h-16 flex items-center justify-between px-4 shadow-sm bg-primary text-white fixed w-full top-0 z-10">
+            <h1 class="text-xl font-['Pacifico']">logo</h1>
+            <div class="flex items-center space-x-2">
+                <div class="text-right">
+                    <p id="currentDate" class="text-xs font-light"></p>
+                    <p id="currentDay" class="text-xs font-light"></p>
+                </div>
+                <button id="logoutBtn" class="w-8 h-8 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 cursor-pointer">
+                    <i class="ri-logout-box-r-line text-white"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="flex-1 pt-16 pb-16 overflow-y-auto bg-gray-50">
+            <!-- Student Info Card -->
+            <div class="p-4">
+                <div class="bg-white rounded-lg shadow-md p-4 flex items-center">
+                    <div class="w-16 h-16 rounded-full overflow-hidden bg-gray-200 flex-shrink-0">
+                        <img id="studentPhoto" src="" alt="Student Photo" class="w-full h-full object-cover">
+                    </div>
+                    <div class="ml-4 flex-1">
+                        <h2 id="studentName" class="text-lg font-semibold text-gray-800"></h2>
+                        <p class="text-sm text-gray-600">User ID: <span id="userIdDisplay"></span></p>
+                        <p class="text-xs text-primary font-medium mt-1">Welcome to your banking portal</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Balance Section -->
+            <div class="p-4">
+                <div class="bg-gradient-to-r from-primary to-secondary rounded-lg shadow-md p-5 text-white">
+                    <h3 class="text-lg font-semibold mb-2">Account Balance</h3>
+                    <p class="text-sm mb-4">Check your current account balance and transaction history</p>
+                    <a id="spreadsheetLink" href="#" target="_blank" class="inline-block w-full bg-white text-primary font-medium py-2.5 px-4 rounded-button shadow-sm hover:bg-gray-100 transition-all flex items-center justify-center cursor-pointer">
+                        <i class="ri-bank-card-line mr-2"></i>
+                        View Balance Details
+                        <i class="ri-external-link-line ml-2"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Our Services Section -->
+            <div class="p-4">
+                <h3 class="text-lg font-semibold mb-4 text-gray-800">Our Services</h3>
+                <div class="grid grid-cols-3 gap-3">
+                    <!-- Service 1 -->
+                    <div class="service-card bg-white rounded-lg shadow-sm p-3 flex flex-col items-center cursor-pointer hover:shadow-md transition-all">
+                        <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-2">
+                            <img src="https://readdy.ai/api/search-image?query=icon%2C%25203D%2520cartoon%2C%2520piggy%2520bank%2520with%2520coins%2C%2520the%2520icon%2520should%2520take%2520up%252070%25%2520of%2520the%2520frame%2C%2520vibrant%2520green%2520colors%2520with%2520soft%2520gradients%2C%2520minimalist%2520design%2C%2520smooth%2520rounded%2520shapes%2C%2520subtle%2520shading%2C%2520no%2520outlines%2C%2520centered%2520composition%2C%2520isolated%2520on%2520white%2520background%2C%2520playful%2520and%2520friendly%2520aesthetic%2C%2520high%2520detail%2520quality%2C%2520clean%2520and%2520modern%2520look&width=64&height=64&seq=service1&orientation=squarish" class="w-full h-full object-contain" alt="Happy Saving">
+                        </div>
+                        <p class="text-xs text-center text-gray-800 font-medium whitespace-nowrap overflow-hidden text-overflow-ellipsis">Happy Saving</p>
+                    </div>
+                    
+                    <!-- Service 2 -->
+                    <div class="service-card bg-white rounded-lg shadow-sm p-3 flex flex-col items-center cursor-pointer hover:shadow-md transition-all">
+                        <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-2">
+                            <img src="https://readdy.ai/api/search-image?query=icon%2C%25203D%2520cartoon%2C%2520graduation%2520cap%2520and%2520pencil%2C%2520the%2520icon%2520should%2520take%2520up%252070%25%2520of%2520the%2520frame%2C%2520vibrant%2520green%2520colors%2520with%2520soft%2520gradients%2C%2520minimalist%2520design%2C%2520smooth%2520rounded%2520shapes%2C%2520subtle%2520shading%2C%2520no%2520outlines%2C%2520centered%2520composition%2C%2520isolated%2520on%2520white%2520background%2C%2520playful%2520and%2520friendly%2520aesthetic%2C%2520high%2520detail%2520quality%2C%2520clean%2520and%2520modern%2520look&width=64&height=64&seq=service2&orientation=squarish" class="w-full h-full object-contain" alt="Exam Registration">
+                        </div>
+                        <p class="text-xs text-center text-gray-800 font-medium whitespace-nowrap overflow-hidden text-overflow-ellipsis">Exam Registration</p>
+                    </div>
+                    
+                    <!-- Service 3 -->
+                    <div class="service-card bg-white rounded-lg shadow-sm p-3 flex flex-col items-center cursor-pointer hover:shadow-md transition-all">
+                        <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-2">
+                            <img src="https://readdy.ai/api/search-image?query=icon%2C%25203D%2520cartoon%2C%2520mobile%2520phone%2520with%2520signal%2520waves%2C%2520the%2520icon%2520should%2520take%2520up%252070%25%2520of%2520the%2520frame%2C%2520vibrant%2520green%2520colors%2520with%2520soft%2520gradients%2C%2520minimalist%2520design%2C%2520smooth%2520rounded%2520shapes%2C%2520subtle%2520shading%2C%2520no%2520outlines%2C%2520centered%2520composition%2C%2520isolated%2520on%2520white%2520background%2C%2520playful%2520and%2520friendly%2520aesthetic%2C%2520high%2520detail%2520quality%2C%2520clean%2520and%2520modern%2520look&width=64&height=64&seq=service3&orientation=squarish" class="w-full h-full object-contain" alt="Phone Recharge">
+                        </div>
+                        <p class="text-xs text-center text-gray-800 font-medium whitespace-nowrap overflow-hidden text-overflow-ellipsis">Phone Recharge</p>
+                    </div>
+                    
+                    <!-- Service 4 -->
+                    <div class="service-card bg-white rounded-lg shadow-sm p-3 flex flex-col items-center cursor-pointer hover:shadow-md transition-all">
+                        <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-2">
+                            <img src="https://readdy.ai/api/search-image?query=icon%2C%25203D%2520cartoon%2C%2520shopping%2520cart%2520with%2520bag%2C%2520the%2520icon%2520should%2520take%2520up%252070%25%2520of%2520the%2520frame%2C%2520vibrant%2520green%2520colors%2520with%2520soft%2520gradients%2C%2520minimalist%2520design%2C%2520smooth%2520rounded%2520shapes%2C%2520subtle%2520shading%2C%2520no%2520outlines%2C%2520centered%2520composition%2C%2520isolated%2520on%2520white%2520background%2C%2520playful%2520and%2520friendly%2520aesthetic%2C%2520high%2520detail%2520quality%2C%2520clean%2520and%2520modern%2520look&width=64&height=64&seq=service4&orientation=squarish" class="w-full h-full object-contain" alt="Online Purchase">
+                        </div>
+                        <p class="text-xs text-center text-gray-800 font-medium whitespace-nowrap overflow-hidden text-overflow-ellipsis">Online Purchase</p>
+                    </div>
+                    
+                    <!-- Service 5 -->
+                    <div class="service-card bg-white rounded-lg shadow-sm p-3 flex flex-col items-center cursor-pointer hover:shadow-md transition-all">
+                        <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-2">
+                            <img src="https://readdy.ai/api/search-image?query=icon%2C%25203D%2520cartoon%2C%2520money%2520transfer%2520arrows%2C%2520the%2520icon%2520should%2520take%2520up%252070%25%2520of%2520the%2520frame%2C%2520vibrant%2520green%2520colors%2520with%2520soft%2520gradients%2C%2520minimalist%2520design%2C%2520smooth%2520rounded%2520shapes%2C%2520subtle%2520shading%2C%2520no%2520outlines%2C%2520centered%2520composition%2C%2520isolated%2520on%2520white%2520background%2C%2520playful%2520and%2520friendly%2520aesthetic%2C%2520high%2520detail%2520quality%2C%2520clean%2520and%2520modern%2520look&width=64&height=64&seq=service5&orientation=squarish" class="w-full h-full object-contain" alt="Fund Transfer">
+                        </div>
+                        <p class="text-xs text-center text-gray-800 font-medium whitespace-nowrap overflow-hidden text-overflow-ellipsis">Fund Transfer</p>
+                    </div>
+                    
+                    <!-- Service 6 -->
+                    <div class="service-card bg-white rounded-lg shadow-sm p-3 flex flex-col items-center cursor-pointer hover:shadow-md transition-all">
+                        <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-2">
+                            <img src="https://readdy.ai/api/search-image?query=icon%2C%25203D%2520cartoon%2C%2520investment%2520growth%2520chart%2C%2520the%2520icon%2520should%2520take%2520up%252070%25%2520of%2520the%2520frame%2C%2520vibrant%2520green%2520colors%2520with%2520soft%2520gradients%2C%2520minimalist%2520design%2C%2520smooth%2520rounded%2520shapes%2C%2520subtle%2520shading%2C%2520no%2520outlines%2C%2520centered%2520composition%2C%2520isolated%2520on%2520white%2520background%2C%2520playful%2520and%2520friendly%2520aesthetic%2C%2520high%2520detail%2520quality%2C%2520clean%2520and%2520modern%2520look&width=64&height=64&seq=service6&orientation=squarish" class="w-full h-full object-contain" alt="Amana Scheme">
+                        </div>
+                        <p class="text-xs text-center text-gray-800 font-medium whitespace-nowrap overflow-hidden text-overflow-ellipsis">Amana Scheme</p>
+                    </div>
+                    
+                    <!-- Service 7 -->
+                    <div class="service-card bg-white rounded-lg shadow-sm p-3 flex flex-col items-center cursor-pointer hover:shadow-md transition-all">
+                        <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-2">
+                            <img src="https://readdy.ai/api/search-image?query=icon%2C%25203D%2520cartoon%2C%2520legal%2520gavel%2520and%2520document%2C%2520the%2520icon%2520should%2520take%2520up%252070%25%2520of%2520the%2520frame%2C%2520vibrant%2520green%2520colors%2520with%2520soft%2520gradients%2C%2520minimalist%2520design%2C%2520smooth%2520rounded%2520shapes%2C%2520subtle%2520shading%2C%2520no%2520outlines%2C%2520centered%2520composition%2C%2520isolated%2520on%2520white%2520background%2C%2520playful%2520and%2520friendly%2520aesthetic%2C%2520high%2520detail%2520quality%2C%2520clean%2520and%2520modern%2520look&width=64&height=64&seq=service7&orientation=squarish" class="w-full h-full object-contain" alt="Legal Help">
+                        </div>
+                        <p class="text-xs text-center text-gray-800 font-medium whitespace-nowrap overflow-hidden text-overflow-ellipsis">Legal Help</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Recent Transactions -->
+            <div class="p-4">
+                <h3 class="text-lg font-semibold mb-4 text-gray-800">Recent Transactions</h3>
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="p-3 border-b border-gray-100 flex justify-between items-center">
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center mr-3">
+                                <i class="ri-arrow-up-line text-red-500"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-gray-800">Exam Fee Payment</p>
+                                <p class="text-xs text-gray-500">June 22, 2025</p>
+                            </div>
+                        </div>
+                        <p class="text-sm font-semibold text-red-500">-$45.00</p>
+                    </div>
+                    
+                    <div class="p-3 border-b border-gray-100 flex justify-between items-center">
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center mr-3">
+                                <i class="ri-arrow-down-line text-green-500"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-gray-800">Scholarship Credit</p>
+                                <p class="text-xs text-gray-500">June 18, 2025</p>
+                            </div>
+                        </div>
+                        <p class="text-sm font-semibold text-green-500">+$250.00</p>
+                    </div>
+                    
+                    <div class="p-3 flex justify-between items-center">
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center mr-3">
+                                <i class="ri-arrow-up-line text-red-500"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-gray-800">Book Purchase</p>
+                                <p class="text-xs text-gray-500">June 15, 2025</p>
+                            </div>
+                        </div>
+                        <p class="text-sm font-semibold text-red-500">-$32.50</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer Navigation -->
+        <div class="h-16 bg-white shadow-[0_-2px_10px_rgba(0,0,0,0.05)] fixed bottom-0 w-full flex items-center justify-around">
+            <a href="#" class="flex flex-col items-center justify-center text-primary">
+                <i class="ri-home-4-line ri-lg"></i>
+                <span class="text-xs mt-1">Home</span>
+            </a>
+            <a href="#" class="flex flex-col items-center justify-center text-gray-500">
+                <i class="ri-bank-card-line ri-lg"></i>
+                <span class="text-xs mt-1">Accounts</span>
+            </a>
+            <a href="#" class="flex flex-col items-center justify-center text-gray-500">
+                <i class="ri-exchange-funds-line ri-lg"></i>
+                <span class="text-xs mt-1">Transfer</span>
+            </a>
+            <a href="#" class="flex flex-col items-center justify-center text-gray-500">
+                <i class="ri-user-settings-line ri-lg"></i>
+                <span class="text-xs mt-1">Profile</span>
+            </a>
+        </div>
+    </div>
+    
+    <!-- Login Authentication Script -->
+    <script id="authScript">
+        document.addEventListener('DOMContentLoaded', function() {
+            // Student database
+            const students = [
+                {
+                    name: "Uvis",
+                    userId: "ap",
+                    passcode: "12",
+                    photo: "Dummy.jpg",
+                    spreadsheetLink: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQDW-ZwjYoSeQoNDcYGNxJ819EM7qUh9yGYr2-UqX-2aqvC4V5zQen1nULDaDYyCehfgvSZHybaou1L/pubhtml?gid=1567274460&single=true"
+                },
+                {
+                    name: "Sabeeh",
+                    userId: "sabi",
+                    passcode: "\\\\\\",
+                    photo: "sabiDummy.jpg",
+                    spreadsheetLink: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQDW-ZwjYoSeQoNDcYJ819EM7qUh9yGYr2-UqX-2aqvC4V5zQen1nULDaDYyCehfgvSZHybaou1L/pubhtml?gid=1567274460&single=true"
+                },
+                {
+                    name: "Emily Johnson",
+                    userId: "emily",
+                    passcode: "pass123",
+                    photo: "https://readdy.ai/api/search-image?query=professional%2520headshot%2520of%2520a%2520young%2520female%2520student%252C%2520natural%2520lighting%252C%2520neutral%2520background%252C%2520friendly%2520smile%252C%2520high%2520quality%2520portrait&width=100&height=100&seq=emily&orientation=squarish",
+                    spreadsheetLink: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQDW-ZwjYoSeQoNDcYJ819EM7qUh9yGYr2-UqX-2aqvC4V5zQen1nULDaDYyCehfgvSZHybaou1L/pubhtml?gid=1567274460&single=true"
+                },
+                {
+                    name: "Michael Chen",
+                    userId: "michael",
+                    passcode: "chen2025",
+                    photo: "https://readdy.ai/api/search-image?query=professional%2520headshot%2520of%2520a%2520young%2520asian%2520male%2520student%252C%2520natural%2520lighting%252C%2520neutral%2520background%252C%2520friendly%2520smile%252C%2520high%2520quality%2520portrait&width=100&height=100&seq=michael&orientation=squarish",
+                    spreadsheetLink: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQDW-ZwjYoSeQoNDcYJ819EM7qUh9yGYr2-UqX-2aqvC4V5zQen1nULDaDYyCehfgvSZHybaou1L/pubhtml?gid=1567274460&single=true"
+                },
+                {
+                    name: "Sarah Williams",
+                    userId: "sarah",
+                    passcode: "williams456",
+                    photo: "https://readdy.ai/api/search-image?query=professional%2520headshot%2520of%2520a%2520young%2520female%2520student%2520with%2520glasses%252C%2520natural%2520lighting%252C%2520neutral%2520background%252C%2520friendly%2520smile%252C%2520high%2520quality%2520portrait&width=100&height=100&seq=sarah&orientation=squarish",
+                    spreadsheetLink: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQDW-ZwjYoSeQoNDcYJ819EM7qUh9yGYr2-UqX-2aqvC4V5zQen1nULDaDYyCehfgvSZHybaou1L/pubhtml?gid=1567274460&single=true"
+                }
+            ];
+            
+            const loginForm = document.getElementById('loginForm');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const userId = document.getElementById('userId').value;
+                const passcode = document.getElementById('passcode').value;
+                
+                // Find student
+                const student = students.find(s => s.userId === userId && s.passcode === passcode);
+                
+                if (student) {
+                    // Login successful
+                    document.getElementById('loginPage').classList.add('hidden');
+                    document.getElementById('dashboardPage').classList.remove('hidden');
+                    
+                    // Set student info
+                    document.getElementById('studentName').textContent = student.name;
+                    document.getElementById('userIdDisplay').textContent = student.userId;
+                    
+                    // Set photo with placeholder if needed
+                    const photoElement = document.getElementById('studentPhoto');
+                    if (student.photo.startsWith('http')) {
+                        photoElement.src = student.photo;
+                    } else {
+                        // Use a placeholder image if the photo is just a filename
+                        photoElement.src = "https://readdy.ai/api/search-image?query=simple%2520avatar%2520placeholder%2520icon%252C%2520minimal%2520design%252C%2520green%2520color%2520scheme%252C%2520high%2520quality%2520digital%2520art&width=100&height=100&seq=placeholder&orientation=squarish";
+                    }
+                    
+                    // Set spreadsheet link
+                    document.getElementById('spreadsheetLink').href = student.spreadsheetLink;
+                    
+                } else {
+                    // Login failed
+                    errorMessage.textContent = "Invalid User ID or Passcode. Please try again.";
+                    errorMessage.classList.remove('hidden');
+                    
+                    // Clear the error after 3 seconds
+                    setTimeout(() => {
+                        errorMessage.classList.add('hidden');
+                    }, 3000);
+                }
+            });
+        });
+    </script>
+    
+    <!-- Dashboard Functionality Script -->
+    <script id="dashboardScript">
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set current date and day
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            
+            // Using the date from the requirements
+            const specificDate = new Date('2025-06-24');
+            
+            document.getElementById('currentDate').textContent = specificDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+            document.getElementById('currentDay').textContent = specificDate.toLocaleDateString('en-US', { weekday: 'long' });
+            
+            // Logout functionality
+            document.getElementById('logoutBtn').addEventListener('click', function() {
+                document.getElementById('dashboardPage').classList.add('hidden');
+                document.getElementById('loginPage').classList.remove('hidden');
+                
+                // Clear form fields
+                document.getElementById('userId').value = '';
+                document.getElementById('passcode').value = '';
+            });
+            
+            // Service card click animation
+            const serviceCards = document.querySelectorAll('.service-card');
+            serviceCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    this.classList.add('scale-95');
+                    setTimeout(() => {
+                        this.classList.remove('scale-95');
+                    }, 150);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
