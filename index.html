@@ -649,6 +649,39 @@
         </div>
     </footer>
 
+    <!-- Pop-up Modal -->
+<div id="welcomePopup" style="display:none;">
+  <div class="popup-overlay"></div>
+  <div class="popup-content">
+    <button class="popup-close" id="popupCloseBtn" title="Close">&times;</button>
+    <h2 style="color:#0a5c36; margin-bottom:10px;">Welcome !</h2>
+    <p style="font-size:1.2rem; color:#d35400; margin-bottom:20px;">
+     <strong>Thank You For your Faith And Support </strong> <br> "save wisely, prosper greatly.” 
+     <p style="text-align: end;"><b> Mohammed Uvais</b> <br> Fund Manager </p>
+    </p>
+    <button id="popupThanksBtn" class="btn primary" style="background:linear-gradient(90deg,#f9d423,#ff4e50);color:#fff;font-weight:bold;">Thanks</button>
+  </div>
+</div>
+<!-- ...existing code... -->
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(function() {
+        var popup = document.getElementById('welcomePopup');
+        if (popup) popup.style.display = 'flex';
+    }, 500);
+
+    function closePopup() {
+        var popup = document.getElementById('welcomePopup');
+        if (popup) popup.style.display = 'none';
+    }
+
+    document.getElementById('popupCloseBtn').onclick = closePopup;
+    document.getElementById('popupThanksBtn').onclick = closePopup;
+});
+</script>
+<!-- ...existing code... -->
+
     <!-- Back to Top Button -->
     <a href="#home" class="back-to-top">
         <i class="fas fa-arrow-up"></i>
